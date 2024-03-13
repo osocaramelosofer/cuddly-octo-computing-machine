@@ -25,7 +25,6 @@ app.use(cors({
 app.use(rateLimitMiddleware)
 
 app.get('/', (req: Request, res: Response) => {
-  console.log("hola")
     res.status(200).json({ message: 'Hello World!' })
 })
 

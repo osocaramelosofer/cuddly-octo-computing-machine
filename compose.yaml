@@ -2,7 +2,8 @@ services:
   server:
     build:
       context: .
-    
+    volumes:
+      - ./service-account-file.json:/usr/src/app/service-account-file.json
     env_file:
       - .env
     ports:
