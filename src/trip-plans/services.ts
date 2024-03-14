@@ -1,28 +1,46 @@
 import { db } from "../firebaseAdmin";
+import { getEnv } from "../helpers/getEnv";
 import { ITripPlan } from "../models/ITripPlan";
 
-
+interface ITripPlanResponse {
+    success: boolean
+    data?: string
+    error?: {
+        message: string
+        detail?: string
+        code?: string
+    }
+}
 export const tripPlanService = {
-    createTripPlan: async (tripPlanData: ITripPlan ): Promise<{success: boolean, data: any}> => {
+    createTripPlan: async (tripPlanData: ITripPlan ): Promise<ITripPlanResponse> => {
         try {
-            // Genera un nuevo ID para el documento
-            const newTripPlanId = db.collection('tripPlan-dev').doc().id;
+            // Generate a new unique id for the doc
+            const newTripPlanId = db
+            .collection('tripPlan-' + getEnv())
+            .doc()
+            .id;
 
-            // Crea el trip plan con el ID generado y los datos proporcionados
-            await db.collection('tripPlan-dev').doc(newTripPlanId).set({
+            // Create trip plan
+            await db
+            .collection('tripPlan-' + getEnv())
+            .doc(newTripPlanId)
+            .set({
                 ...tripPlanData,
                 dateCreated: new Date(),
-                documentId: newTripPlanId // Asigna el ID generado al campo documentId si lo deseas
+                documentId: newTripPlanId // Assign the ID generated
             });
 
-            // Realiza las operaciones adicionales necesarias, por ejemplo, crear un documento relacionado
-            await db.collection('interactions-dev').doc(newTripPlanId).set({}); // Ejemplo de creación de un documento relacionado sin campos adicionales
+            // Create trip plan´s interaction document
+            await db
+            .collection('interactions-' + getEnv())
+            .doc(newTripPlanId) // we use the same id generated to link it with the trip plan
+            .set({}); // We just create the document without any fields
 
             return { success: true, data: newTripPlanId };
         } catch (error) {
             return {
                 success: false,
-                data: null
+                error: error instanceof Error ? error : new Error('An unknown error occurred')
             }   
         }
     }

@@ -7,6 +7,7 @@ import { rateLimitMiddleware } from './middlewares/rateLimiter'
 import { searchRouter } from './routes/test'
 import { userRouter } from './users/routes'
 import { tripPlanRouter } from './trip-plans/routes'
+import { getEnv } from './helpers/getEnv'
 
 const app: Express = express()
 
@@ -27,6 +28,7 @@ app.use(cors({
 app.use(rateLimitMiddleware)
 
 app.get('/', (req: Request, res: Response) => {
+    console.log("=== ",getEnv())
     res.status(200).json({ message: 'Hello World!' })
 })
 
