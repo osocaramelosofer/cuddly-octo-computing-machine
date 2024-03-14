@@ -6,6 +6,7 @@ import { fsqRouter } from './routes/fsq'
 import { rateLimitMiddleware } from './middlewares/rateLimiter'
 import { searchRouter } from './routes/test'
 import { userRouter } from './users/routes'
+import { tripPlanRouter } from './trip-plans/routes'
 
 const app: Express = express()
 
@@ -33,6 +34,7 @@ app.use('/api/v1/chat', chatRouter)
 app.use('/api/v1/fsq', fsqRouter)
 app.use('/api/v1/search', searchRouter)
 app.use('/api/v1/users', userRouter)
+app.use('/api/v1/trip-plans', tripPlanRouter)
 
 const PORT: number = 3000
 app.listen(PORT, (): void => {

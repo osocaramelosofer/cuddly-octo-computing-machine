@@ -1,8 +1,7 @@
 import { db } from "../firebaseAdmin";
-import { IUser } from "../models/user";
 
 export const userService = {
-    createUser: async ({name, username, email}: IUser): Promise<{success: boolean, data: any}> => {
+    createUser: async ({name, username, email}: any): Promise<{success: boolean, data: any}> => {
         try {
             const docRef = await db.collection('test-users').add({
                 name: name,

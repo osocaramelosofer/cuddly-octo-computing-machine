@@ -4,7 +4,6 @@ import { userService } from './services'
 export default {
     createUser: async(req: Request, res:Response) => { 
         try {
-            console.log("creating user")
             const {name, username, email} =  req.body
             const {success, data} = await userService.createUser({name, username, email})
             if(success){
