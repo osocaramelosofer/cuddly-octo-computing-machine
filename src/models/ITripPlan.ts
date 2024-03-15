@@ -7,7 +7,7 @@ interface IBabelonPlace {
     apiProvider: string
     dates: ITravelDates
     location: string // should be a string?
-    categoryType: string // maybe we can handle with numbers, ask Lili
+    categoryType: number // maybe we can handle with numbers, ask Lili
 }
 
 interface ITravelDates {

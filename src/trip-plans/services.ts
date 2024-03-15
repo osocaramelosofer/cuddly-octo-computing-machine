@@ -16,13 +16,13 @@ export const tripPlanService = {
         try {
             // Generate a new unique id for the doc
             const newTripPlanId = db
-            .collection('tripPlan-' + getEnv())
+            .collection('tripPlans-' + getEnv())
             .doc()
             .id;
 
             // Create trip plan
             await db
-            .collection('tripPlan-' + getEnv())
+            .collection('tripPlans-' + getEnv())
             .doc(newTripPlanId)
             .set({
                 ...tripPlanData,
