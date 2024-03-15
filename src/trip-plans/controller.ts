@@ -1,11 +1,12 @@
 import {  type Request, type Response } from 'express'
 import { tripPlanService } from './services'
+import { ITripPlan } from '../models/ITripPlan'
 
 export default {
     createTripPlan: async(req: Request, res:Response) => { 
         try {
             console.log("creating trip plan")
-            const { tripPlan } =  req.body
+            const { tripPlan }  =  req.body
             const {success, data, error} = await tripPlanService.createTripPlan(tripPlan)
             if(success){
                 return res.status(201).json({

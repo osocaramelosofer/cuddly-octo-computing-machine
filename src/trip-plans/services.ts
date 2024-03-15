@@ -34,7 +34,13 @@ export const tripPlanService = {
             await db
             .collection('interactions-' + getEnv())
             .doc(newTripPlanId) // we use the same id generated to link it with the trip plan
-            .set({}); // We just create the document without any fields
+            .set({
+                documentId: newTripPlanId,
+                comments: [],
+                shares: [],
+                saves: [],
+                likes: [],
+            }); // We just create the document without any fields
 
             return { success: true, data: newTripPlanId };
         } catch (error) {
