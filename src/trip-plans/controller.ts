@@ -34,5 +34,33 @@ export default {
             })
         }
     },
-    
+    getTripPlans: async (req: Request, res:Response) => {
+        try {
+            console.log("Getting trip plans")
+            const {success, data, error} = await tripPlanService.getTripPlans()
+            if(success){
+                return res.status(201).json({
+                    success,
+                    data
+                 })
+            } else {
+                return res.status(400).json({
+                    success: false,
+                    error: {
+                        message: "Error creating the trip plan",
+                        detail: error ? error.message : ''
+                    }
+                })
+            }
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                error: {
+                    message: `Error in the request: ${error.message}`,
+                    detail: error.message,
+                    code: "INTERNAL_SERVER_ERROR",
+                }
+            })
+        }
+    }
 }

@@ -1,5 +1,6 @@
 import { IFSQPlace } from "./IFSQPlace"
 import IFirebaseUser from "./IFirebaseUser"
+import { IInteraction } from "./IInteraction"
 import { IUser } from "./ILog"
 
 
@@ -49,4 +50,7 @@ interface IDates {
 export interface IReadTripPlan extends ITripPlan {
   documentId: string
 
+}
+export interface ITripPlanWithInteractions extends IReadTripPlan{
+  interactions?: IInteraction
 }
