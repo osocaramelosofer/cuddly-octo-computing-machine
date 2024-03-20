@@ -44,12 +44,14 @@ interface IDates {
     owner: IUser
     places: IFSQPlace[]
     invitedUsers: IInvitedUsers[] 
+
+    interactionRef: string
   }
 
 
 export interface IReadTripPlan extends ITripPlan {
   documentId: string
-
+  interactions?: IInteraction
 }
 export interface ITripPlanWithInteractions extends IReadTripPlan{
   interactions?: IInteraction

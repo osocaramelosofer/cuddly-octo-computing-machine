@@ -1,6 +1,6 @@
 import { db } from "../firebaseAdmin";
 import { getEnv } from "../helpers/getEnv";
-import { ITripPlan, ITripPlanWithInteractions } from "../models/ITripPlan";
+import { IReadTripPlan, ITripPlan, ITripPlanWithInteractions } from "../models/ITripPlan";
 
 interface ITripPlanResponse {
     success: boolean
@@ -16,9 +16,13 @@ interface ICreateTripPlanResponse extends ITripPlanResponse {
 interface IGetTripPlansResponse extends ITripPlanResponse {
     data?: ITripPlanWithInteractions[]
 }
+interface  IGetTripPlanResponse extends ITripPlanResponse {
+    data?: IReadTripPlan
+}
 export const tripPlanService = {
     createTripPlan: async (tripPlanData: ITripPlan ): Promise<ICreateTripPlanResponse> => {
         try {
+            if(!tripPlanData) throw new Error('No trip plan was given')
             // Generate a new unique id for the doc
             const newTripPlanId = db
             .collection('tripPlans-' + getEnv())
@@ -92,6 +96,36 @@ export const tripPlanService = {
                 success: false,
                 error: error instanceof Error ? { message: error.message } : { message: 'An unknown error occurred' }
             };
+        }
+    },
+    getTripPlan: async(tripPlanId:string):Promise<IGetTripPlanResponse> => {
+        try {
+            if(!tripPlanId) throw new Error('Trip plan id was not given')
+            const tripPlansCollection = db.collection("tripPlans-" + getEnv());
+            const tripPlanDoc = tripPlansCollection.doc(tripPlanId)
+            const docSnapshot = await tripPlanDoc.get()
+            if(!docSnapshot.exists) throw new Error('No trip plan found with the given id')
+            const tripPlanResponse: IReadTripPlan =  docSnapshot.data() as unknown as IReadTripPlan
+            return { success: true, data: tripPlanResponse }
+        } catch (error) {
+            console.error('Error getting trip plan', error.message)
+            return {
+                success: false,
+                error: error instanceof Error ? { message: error.message } : { message: `Something went wrong getting the trip plan ${tripPlanId}`}
+            }
+        }
+    },
+    saveTripPlan: async (tripPlanId:string): Promise<any> => {
+        try {
+
+            const tripPlanCreated = {}
+            
+            return {
+                success: true,
+                data: tripPlanCreated
+            }
+        } catch (error) {
+            
         }
     }
 }
