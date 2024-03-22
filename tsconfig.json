@@ -109,7 +109,7 @@
   },
   "include": [
     "src/**/*.ts" // Asegúrate de que coincida con la estructura de tu proyecto
-  ],
+, "src/sendgrid/send-email.js"  ],
   "exclude": [
     "./build" // Asegúrate de que coincida con los directorios que deseas excluir
   ]
