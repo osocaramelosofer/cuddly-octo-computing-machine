@@ -8,6 +8,7 @@ import { searchRouter } from './routes/test'
 import { userRouter } from './users/routes'
 import { tripPlanRouter } from './trip-plans/routes'
 import { getEnv } from './helpers/getEnv'
+import { twilioRouter } from './twilio/routes'
 
 const app: Express = express()
 
@@ -37,6 +38,7 @@ app.use('/api/v1/fsq', fsqRouter)
 app.use('/api/v1/search', searchRouter)
 app.use('/api/v1/users', userRouter)
 app.use('/api/v1/trip-plans', tripPlanRouter)
+app.use('/api/v1/sms', twilioRouter)
 
 const PORT: number = 3000
 app.listen(PORT, (): void => {
